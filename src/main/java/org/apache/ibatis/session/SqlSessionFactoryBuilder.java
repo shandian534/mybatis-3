@@ -46,7 +46,11 @@ public class SqlSessionFactoryBuilder {
 
   public SqlSessionFactory build(Reader reader, String environment, Properties properties) {
     try {
+      //MyBatis 的初始化流程的入口是 SqlSessionFactoryBuilder 的 #build(Reader reader, String environment, Properties properties) 方法
+      // <1> 创建 XMLConfigBuilder 对象
       XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
+      // <2> 执行 XML 解析
+      // <3> 创建 DefaultSqlSessionFactory 对象
       return build(parser.parse());
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error building SqlSession.", e);
